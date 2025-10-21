@@ -4,31 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Testable Profile Card</title>
+    
+
   <style>
     body {
+      background: linear-gradient(to right, #f0f4ff, #fdfbff);
       font-family: 'Inter', Arial, sans-serif;
-      background-color: #f9fafb;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
     }
-
+   .big {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffffcc;
+      padding: 10px 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+   } 
+    
     article {
       background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 360px;
       padding: 24px;
+      border-radius: 12px;
+      max-width: 400px;
       text-align: center;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+    
 
-    article:hover {
-      transform: translateY(-5px);
-    }
+article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+    
 
     figure img {
       width: 120px;
@@ -43,7 +56,9 @@
       margin: 12px 0 8px;
       color: #111827;
     }
-
+    h2 {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
     p {
       color: #4b5563;
       line-height: 1.5;
@@ -60,13 +75,15 @@
     }
 
     a {
-      color: #0077ff;
-      text-decoration: none;
-    }
+  color: #0077ff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
 
-    a:focus {
-      outline: 2px solid #0077ff;
-    }
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
 
     .time {
       margin-top: 15px;
@@ -82,11 +99,15 @@
   </style>
 </head>
 <body>
+  <nav class="big" aria-label="Main navigation" >
+  <a href="about.html" data-testid="nav-about">About</a> |
+  <a href="contact.html" data-testid="nav-contact">Contact</a>
+</nav>
   <main>
     <article data-testid="test-profile-card">
       <figure>
-        <img src="profile.jpg" 
-             alt="Portrait of Dorcas A." 
+        <img src="C:\Users\USER\Documents\HNG\dorcas.jpg" 
+             alt="Portrait of Dorcas O." 
              data-testid="test-user-avatar"
              loading="lazy">
       </figure>
