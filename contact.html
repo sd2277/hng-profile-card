@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Contact</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background: #ffffffcc;
+      padding: 12px 20px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    nav a {
+      margin: 0 10px;
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      color: #111827;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .error {
+      color: #b00020;
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .success {
+      color: green;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .loading {
+      color: #555;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main">
+    <a href="PROFILE CARD.HTML">Home</a> |
+    <a href="about.html">About</a> 
+   
+  </nav>
+
+  <main>
+    <h1>Contact Us</h1>
+
+    <form id="contactForm" novalidate>
+      <label for="name">Full name</label>
+      <input id="name" name="name" type="text" data-testid="test-contact-name" aria-describedby="error-name" required>
+      <div id="error-name" class="error" data-testid="test-contact-error-name" aria-live="polite"></div>
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" data-testid="test-contact-email" aria-describedby="error-email" required>
+      <div id="error-email" class="error" data-testid="test-contact-error-email" aria-live="polite"></div>
+
+      <label for="subject">Subject</label>
+      <input id="subject" name="subject" type="text" data-testid="test-contact-subject" aria-describedby="error-subject" required>
+      <div id="error-subject" class="error" data-testid="test-contact-error-subject" aria-live="polite"></div>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="4" data-testid="test-contact-message" aria-describedby="error-message" required></textarea>
+      <div id="error-message" class="error" data-testid="test-contact-error-message" aria-live="polite"></div>
+
+      <button type="submit" data-testid="test-contact-submit">Send</button>
+      <div id="form-success" class="success" data-testid="test-contact-success" aria-live="polite" hidden></div>
+    </form>
+
+    <script>
+      // Basic JS validation: explains logic in comments
+      const form = document.getElementById('contactForm');
+      const successDiv = document.getElementById('form-success');
+
+      function showError(id, message) {
+        const el = document.getElementById('error-' + id);
+        el.textContent = message;
+      }
+      function clearErrors() {
+        ['name','email','subject','message'].forEach(id => showError(id,''));
+      }
+
+      function isValidEmail(email) {
+        // very simple pattern: name@domain.tld
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault(); // stop real submit so we can validate
+        clearErrors();
+        successDiv.hidden = true;
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const subject = form.subject.value.trim();
+        const message = form.message.value.trim();
+
+        let valid = true;
+        if (!name) { showError('name','Full name is required'); valid = false; }
+        if (!email) { showError('email','Email is required'); valid = false; }
+        else if (!isValidEmail(email)) { showError('email','Please enter a valid email'); valid = false; }
+        if (!subject) { showError('subject','Subject is required'); valid = false; }
+        if (!message) { showError('message','Message is required'); valid = false; }
+        else if (message.length < 10) { showError('message','Message must be at least 10 characters'); valid = false; }
+
+        if (valid) {
+          // show success message — in a real app you'd send this to a server
+          successDiv.hidden = false;
+          successDiv.textContent = 'Thanks! Your message was submitted successfully.';
+          form.reset();
+        }
+      });
+    </script>
+  </main>
+</body>
+</html>
